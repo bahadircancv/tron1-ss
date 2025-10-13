@@ -1,0 +1,52 @@
+#footprint: [[-0.356, -0.2675], [-0.356, 0.2675],[0.356, 0.2675], [0.356, -0.2675]]
+footprint: [[-0.6, -0.25], [-0.6, 0.25],[0.6, 0.25], [0.6, -0.25]]
+#robot_radius: 0.44
+
+map_type: costmap
+obstacle_layer:
+  enabled: true
+  max_obstacle_height: 100
+  min_obstacle_height: 0.0
+  obstacle_range: 8.0
+  raytrace_range: 10.0
+  inflation_radius: 0.65
+  combination_method: 1
+  observation_sources: scan #livox_data #laser_scan_sensor  
+  track_unknown_space: false
+ 
+  origin_z: 0.0
+  z_resolution: 0.1
+  z_voxels: 2
+  unknown_threshold: 15
+  mark_threshold: 0
+  publish_voxel_map: false
+  footprint_clearing_enabled: true
+  observation_persistence: 0.0
+#expected_update_rate: 0.2
+  scan: {sensor_frame: body_2d, data_type: LaserScan, topic: /scan, marking: true, clearing: true}
+  laser_scan_sensor:
+    data_type: LaserScan
+    topic: scan
+    marking: true
+    clearing: true
+#    expected_update_rate: 0
+    min_obstacle_height: -100.0
+    max_obstacle_height: 100.0
+
+  livox_data:
+    data_type: PointCloud2
+    topic:  /livox/lidar   #/camera/depth/points #_filtered
+    marking: ture
+    clearing: true
+    min_obstacle_height: -0.4
+    max_obstacle_height: 0.4
+    
+inflation_layer:
+  enabled:              true
+  cost_scaling_factor:  10.0  # exponential rate at which the obstacle cost drops off (default: 10)
+  inflation_radius:     0.65 # max. distance from an obstacle at which costs are incurred for planning paths.
+
+static_layer:
+  enabled:              true
+#  map_topic:            "map"
+
